@@ -30,7 +30,7 @@ public class DataInfoUtil {
      * @param message 指定的文本。
      * @return 指定的文本转换成的数据信息。
      */
-    public static DataInfo formMessage(@NonNull String message) {
+    public static DataInfo fromMessage(@NonNull String message) {
         FastJsonDataInfo fastJsonDataInfo = JSON.parseObject(message, FastJsonDataInfo.class);
         return FastJsonDataInfo.toStackBean(fastJsonDataInfo);
     }
