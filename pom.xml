@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>dcti</artifactId>
-    <version>1.0.0.b</version>
+    <version>1.0.0.c</version>
 
     <name>dcti</name>
     <url>http://maven.apache.org</url>
@@ -21,7 +21,7 @@
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.12</junit.version>
-        <subgrade.version>beta-0.3.2.a-SNAPSHOT</subgrade.version>
+        <subgrade.version>beta-0.3.2.b</subgrade.version>
         <fastJson.version>1.2.47</fastJson.version>
         <!-- Maven插件版本声明 -->
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
