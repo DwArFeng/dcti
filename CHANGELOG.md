@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 新增DTO com.dwarfeng.dcti.stack.bean.dto.TimedValue
+- 新增DTO com.dwarfeng.dcti.sdk.bean.dto.FastJsonTimedValue
 
 #### Bug修复
 
