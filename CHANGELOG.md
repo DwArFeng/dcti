@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 增加比较器。
+  - com.dwarfeng.dcti.sdk.util.DataInfoHappenedDateComparator。
+  - com.dwarfeng.dcti.sdk.util.TimedValueHappenedDateComparator。
 
 #### Bug修复
 
