@@ -22,7 +22,7 @@
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.2</junit.version>
         <subgrade.version>1.2.6.a</subgrade.version>
-        <fastJson.version>1.2.47</fastJson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <annotations.version>2.0.0</annotations.version>
         <!-- Maven插件版本声明 -->
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -148,7 +148,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${fastJson.version}</version>
+            <version>${fastjson.version}</version>
         </dependency>
         <!-- annotations组件 -->
         <dependency>

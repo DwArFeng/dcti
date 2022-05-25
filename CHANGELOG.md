@@ -8,6 +8,9 @@
   - com.dwarfeng.dcti.sdk.util.DataInfoHappenedDateComparator。
   - com.dwarfeng.dcti.sdk.util.TimedValueHappenedDateComparator。
 
+- 依赖升级。
+  - 升级 `fastjson` 依赖版本为 `1.2.83` 以规避漏洞。
+
 #### Bug修复
 
 - (无)
