@@ -21,11 +21,12 @@
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.2</junit.version>
-        <subgrade.version>1.2.6.a</subgrade.version>
+        <subgrade.version>1.2.9.a</subgrade.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <annotations.version>2.0.0</annotations.version>
+        <annotations.version>3.0.1</annotations.version>
         <!-- Maven插件版本声明 -->
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
     </properties>
 
     <!-- 声明资源的坐标 -->
@@ -168,6 +169,12 @@
                 <configuration>
                     <skip>true</skip>
                 </configuration>
+            </plugin>
+            <!-- Maven 部署插件，用于部署依赖至上行仓库。 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
