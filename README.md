@@ -8,8 +8,7 @@ Data Collection Transport Interface for DwArFeng
 
 ## 接口内容
 
-1. 定义了标准的数据传输的格式
-
+1. 定义了标准的数据传输的格式。  
    `com.dwarfeng.dcti.stack.bean.dto.DataInfo`
    ```java
    /**
@@ -80,11 +79,9 @@ Data Collection Transport Interface for DwArFeng
        }
    }
    ```
-   
-2. 提供了 `DataInfo` 转换成 JSON 对象时的 bean `com.dwarfeng.dcti.sdk.bean.dto.FastJsonDataInfo`。
 
+2. 提供了 `DataInfo` 转换成 JSON 对象时的 bean `com.dwarfeng.dcti.sdk.bean.dto.FastJsonDataInfo`。  
    请留意 `DataInfo` 转换成 JSON 是通过 FastJson 实现的。
-   
    ```java
    /**
     * 适用于FastJson的DataInfo。
@@ -182,9 +179,8 @@ Data Collection Transport Interface for DwArFeng
        }
    }
    ```
-   
-3. 提供了 `DataInfo` 与文本相互转换的工具类 `com.dwarfeng.dcti.sdk.util.DataInfoUtil`
 
+3. 提供了 `DataInfo` 与文本相互转换的工具类 `com.dwarfeng.dcti.sdk.util.DataInfoUtil`。
    ```java
    /**
     * 数据点工具类。
