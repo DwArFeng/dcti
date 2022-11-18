@@ -21,13 +21,139 @@
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.2</junit.version>
-        <subgrade.version>1.2.10.a</subgrade.version>
+        <subgrade.version>1.2.14.a</subgrade.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <annotations.version>3.0.1</annotations.version>
         <!-- Maven插件版本声明 -->
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
     </properties>
+
+    <!-- 声明资源的坐标 -->
+    <!-- 只定义依赖的版本，并不实际依赖 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- 单元测试 -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- subgrade 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>subgrade-stack</artifactId>
+                <version>${subgrade.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>slf4j-api</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>subgrade-sdk</artifactId>
+                <version>${subgrade.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>aspectjweaver</artifactId>
+                        <groupId>org.aspectj</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>dozer</artifactId>
+                        <groupId>net.sf.dozer</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>dozer-spring</artifactId>
+                        <groupId>net.sf.dozer</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>dutil-basic</artifactId>
+                        <groupId>com.dwarfeng</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>hibernate-core</artifactId>
+                        <groupId>org.hibernate</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>hibernate-validator</artifactId>
+                        <groupId>org.hibernate.validator</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>javax.el</artifactId>
+                        <groupId>org.glassfish</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jaxb-api</artifactId>
+                        <groupId>javax.xml.bind</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jboss-logging</artifactId>
+                        <groupId>org.jboss.logging</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>mybatis</artifactId>
+                        <groupId>org.mybatis</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>mybatis-spring</artifactId>
+                        <groupId>org.mybatis</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>servlet-api</artifactId>
+                        <groupId>javax.servlet</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>spring-aop</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>spring-aspects</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>spring-context</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>spring-core</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>spring-data-redis</artifactId>
+                        <groupId>org.springframework.data</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>spring-kafka</artifactId>
+                        <groupId>org.springframework.kafka</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>spring-orm</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>javax.servlet-api</artifactId>
+                        <groupId>javax.servlet</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>jedis</artifactId>
+                        <groupId>redis.clients</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>kafka-clients</artifactId>
+                        <groupId>org.apache.kafka</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- FastJson Json 处理工具包 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <!-- 声明资源的坐标 -->
     <dependencies>
@@ -35,127 +161,20 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
         </dependency>
-        <!-- subgrade组件 -->
+        <!-- subgrade 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
-            <version>${subgrade.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>annotations</artifactId>
-                    <groupId>com.google.code.findbugs</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-sdk</artifactId>
-            <version>${subgrade.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>annotations</artifactId>
-                    <groupId>com.google.code.findbugs</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>aspectjweaver</artifactId>
-                    <groupId>org.aspectj</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>dozer</artifactId>
-                    <groupId>net.sf.dozer</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>dozer-spring</artifactId>
-                    <groupId>net.sf.dozer</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>dutil-basic</artifactId>
-                    <groupId>com.dwarfeng</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hibernate-core</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hibernate-validator</artifactId>
-                    <groupId>org.hibernate.validator</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>javax.el</artifactId>
-                    <groupId>org.glassfish</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jaxb-api</artifactId>
-                    <groupId>javax.xml.bind</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>mybatis</artifactId>
-                    <groupId>org.mybatis</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>fastjson</artifactId>
-                    <groupId>com.alibaba</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>mybatis-spring</artifactId>
-                    <groupId>org.mybatis</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>servlet-api</artifactId>
-                    <groupId>javax.servlet</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-aop</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-aspects</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-context</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-core</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-data-redis</artifactId>
-                    <groupId>org.springframework.data</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-kafka</artifactId>
-                    <groupId>org.springframework.kafka</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-orm</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <!-- FastJson Json处理工具包 -->
+        <!-- FastJson Json 处理工具包 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-        <!-- annotations组件 -->
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-            <version>${annotations.version}</version>
         </dependency>
     </dependencies>
 
