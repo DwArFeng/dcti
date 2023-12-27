@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * 适用于FastJson的DataInfo。
+ * 适用于 FastJson 的 DataInfo。
  *
  * @author DwArFeng
  * @since 1.0.0

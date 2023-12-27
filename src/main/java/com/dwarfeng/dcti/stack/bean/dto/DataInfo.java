@@ -15,7 +15,7 @@ public class DataInfo implements Dto {
     private static final long serialVersionUID = 6360037498642277881L;
 
     /**
-     * 数据点的UUID。
+     * 数据点的 UUID。
      */
     private long pointLongId;
 
