@@ -10,7 +10,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>dcti</artifactId>
-    <version>1.1.10.a</version>
+    <version>1.1.11.a-SNAPSHOT</version>
 
     <name>dcti</name>
     <url>http://maven.apache.org</url>
