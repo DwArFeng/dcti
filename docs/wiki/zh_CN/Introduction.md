@@ -27,6 +27,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
     * 数据值。
     *
     * @author DwArFeng
+    * @noinspection NonSerializableClassWithSerialVersionUID
     * @since 1.0.0
     */
    public class DataInfo implements Dto {
@@ -100,6 +101,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
     * 适用于FastJson的DataInfo。
     *
     * @author DwArFeng
+    * @noinspection NonSerializableClassWithSerialVersionUID
     * @since 1.0.0
     */
    public class FastJsonDataInfo implements Dto {
