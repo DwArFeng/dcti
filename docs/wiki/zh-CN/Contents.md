@@ -15,3 +15,7 @@
 ## 版本黑名单
 
 - [Version Blacklist](./VersionBlacklist.md) - 版本黑名单，列出了本项目的版本黑名单，请注意避免使用这些版本。
+
+## 如何使用
+
+- [使用说明](./UsageGuide.md) - DCTI的详细使用指南，包含实际应用场景和代码示例。
