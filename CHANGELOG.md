@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/en-US/README.md。
+  - docs/wiki/zh-CN/README.md。
+
 - 依赖升级。
   - 升级 `dutil` 依赖版本为 `0.4.0.a-beta` 以规避漏洞。
   - 升级 `subgrade` 依赖版本为 `1.6.2.a` 以规避漏洞。
