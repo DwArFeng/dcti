@@ -22,6 +22,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 1. 定义了标准的数据传输的格式。
 
    `com.dwarfeng.dcti.stack.bean.dto.DataInfo`
+
    ```java
    /**
     * 数据值。
@@ -35,7 +36,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
        private static final long serialVersionUID = 6360037498642277881L;
    
        /**
-        * 数据点的UUID。
+        * 数据点的 UUID。
         */
        private long pointLongId;
    
@@ -96,9 +97,10 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 2. 提供了 `DataInfo` 转换成 JSON 对象时的 bean `com.dwarfeng.dcti.sdk.bean.dto.FastJsonDataInfo`。
 
    请留意 `DataInfo` 转换成 JSON 是通过 FastJson 实现的。
+
    ```java
    /**
-    * 适用于FastJson的DataInfo。
+    * 适用于 FastJson 的 DataInfo。
     *
     * @author DwArFeng
     * @noinspection NonSerializableClassWithSerialVersionUID
