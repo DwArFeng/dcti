@@ -18,4 +18,4 @@
 
 ## 如何使用
 
-- [使用说明](./UsageGuide.md) - DCTI的详细使用指南，包含实际应用场景和代码示例。
+- [Usage Guide](./UsageGuide.md) - DCTI 的详细使用指南，包含实际应用场景和代码示例。

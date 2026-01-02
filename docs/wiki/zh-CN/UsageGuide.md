@@ -20,11 +20,28 @@ DCTI 提供了标准化的数据传输格式，使得不同系统之间可以方
 在您的 Maven 项目中添加 DCTI 依赖：
 
 ```xml
-<dependency>
-    <groupId>com.dwarfeng</groupId>
-    <artifactId>dcti</artifactId>
-    <version>${dcti.version}</version>
-</dependency>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--suppress MavenModelInspection, MavenModelVersionMissed -->
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+
+    <!-- 省略其他配置 -->
+    <dependencies>
+        <!-- 省略其他配置 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dcti</artifactId>
+            <version>${dcti.version}</version>
+        </dependency>
+        <!-- 省略其他配置 -->
+    </dependencies>
+    <!-- 省略其他配置 -->
+</project>
 ```
 
 ### 2. 基本使用
@@ -33,29 +50,45 @@ DCTI 提供了标准化的数据传输格式，使得不同系统之间可以方
 
 ```java
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
 import java.util.Date;
 
-// 创建数据信息对象
-DataInfo dataInfo = new DataInfo(
-    12345L,                    // 数据点ID
-    "25.6",                    // 数据值（字符串格式）
-    new Date()                 // 发生时间
-);
+public class Example {
+
+    @SuppressWarnings("UnnecessaryModifier")
+    public static void main(String[] args) {
+        // 创建数据信息对象。
+        DataInfo dataInfo = new DataInfo(
+                12345L,                    // 数据点 ID
+                "25.6",                    // 数据值（字符串格式）
+                new Date()                 // 发生时间
+        );
+        // 输出数据信息。
+        System.out.println(dataInfo);
+    }
+}
 ```
 
 #### JSON 序列化和反序列化
 
 ```java
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 
-// 将 DataInfo 转换为 JSON 字符串
-String jsonMessage = DataInfoUtil.toMessage(dataInfo);
-System.out.println(jsonMessage);
-// 输出: {"point_long_id":12345,"value":"25.6","happened_date":"2024-01-15T10:30:00.000+08:00"}
+public class Example {
 
-// 将 JSON 字符串转换回 DataInfo 对象
-DataInfo parsedDataInfo = DataInfoUtil.fromMessage(jsonMessage);
-System.out.println(parsedDataInfo.getPointLongId()); // 输出: 12345
+    @SuppressWarnings("UnnecessaryModifier")
+    public static void main(String[] args) {
+        // 将 DataInfo 转换为 JSON 字符串.
+        String jsonMessage = DataInfoUtil.toMessage(dataInfo);
+        // 输出: {"point_long_id":12345,"value":"25.6","happened_date":"2024-01-15T10:30:00.000+08:00"}。
+        System.out.println(jsonMessage);
+        // 将 JSON 字符串转换回 DataInfo 对象。
+        DataInfo parsedDataInfo = DataInfoUtil.fromMessage(jsonMessage);
+        // 输出: 12345。
+        System.out.println(parsedDataInfo.getPointLongId());
+    }
+}
 ```
 
 ## 实际应用场景
@@ -65,25 +98,31 @@ System.out.println(parsedDataInfo.getPointLongId()); // 输出: 12345
 以下是一个真实的 Kafka 消费者示例，展示了如何在消息队列中使用 DCTI：
 
 ```java
+import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
+import java.util.List;
+import java.util.function.Consumer;
+
 @KafkaListener(
-    id = "${kafka.listener.id}",
-    containerFactory = "kafkaListenerContainerFactory",
-    topics = "${kafka.topic}"
+        id = "${kafka.listener.id}",
+        containerFactory = "kafkaListenerContainerFactory",
+        topics = "${kafka.topic}"
 )
 public void handleConsumerRecordsPolled(
-    List<ConsumerRecord<String, String>> consumerRecords, 
-    Consumer<String, String> consumer, 
-    Acknowledgment ack
+        List<ConsumerRecord<String, String>> consumerRecords,
+        Consumer<String, String> consumer,
+        Acknowledgment ack
 ) {
     for (ConsumerRecord<String, String> consumerRecord : consumerRecords) {
         String message = consumerRecord.value();
         try {
             // 使用 DCTI 工具类将 JSON 消息转换为 DataInfo 对象
             DataInfo dataInfo = DataInfoUtil.fromMessage(message);
-            
+
             // 转换为业务层对象
             // ... 业务逻辑处理 ...
-            
+
         } catch (Exception e) {
             // ... 异常处理逻辑 ...
         }
@@ -95,19 +134,22 @@ public void handleConsumerRecordsPolled(
 ### 数据收集和传输
 
 ```java
+import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
 // 模拟传感器数据收集
 public class SensorDataCollector {
-    
+
     public void collectAndSendData() {
-        // 收集传感器数据
+        // 收集传感器数据。
         long sensorId = 1001L;
         String temperature = "23.5";
         Date timestamp = new Date();
-        
-        // 创建DataInfo对象
+
+        // 创建 DataInfo 对象。
         DataInfo dataInfo = new DataInfo(sensorId, temperature, timestamp);
-        
-        // 转换为 JSON 并发送到消息队列
+
+        // 转换为 JSON 并发送到消息队列。
         String jsonMessage = DataInfoUtil.toMessage(dataInfo);
         // ... 发送到消息队列 ...
     }
@@ -118,20 +160,23 @@ public class SensorDataCollector {
 
 ```java
 import com.dwarfeng.dcti.sdk.util.DataInfoHappenedDateComparator;
-import java.util.ArrayList;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DataProcessor {
-    
+
+    @SuppressWarnings({"Java8ListSort", "SimplifyStreamApiCallChains"})
     public void sortDataByTime(List<DataInfo> dataList) {
         // 使用 DCTI 提供的时间比较器进行排序
         Collections.sort(dataList, DataInfoHappenedDateComparator.INSTANCE);
-        
+
         // 或者使用 Java 8 的 Stream API
         List<DataInfo> sortedData = dataList.stream()
-            .sorted(DataInfoHappenedDateComparator.INSTANCE)
-            .collect(Collectors.toList());
+                .sorted(DataInfoHappenedDateComparator.INSTANCE)
+                .collect(Collectors.toList());
     }
 }
 ```
@@ -141,11 +186,20 @@ public class DataProcessor {
 ### 批量数据处理
 
 ```java
+import com.dwarfeng.dcti.sdk.util.DataInfoHappenedDateComparator;
+import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+@SuppressWarnings("Java8ListSort")
 public class BatchDataProcessor {
-    
+
     public void processBatchData(List<String> jsonMessages) {
         List<DataInfo> dataInfos = new ArrayList<>();
-        
+
         for (String message : jsonMessages) {
             try {
                 DataInfo dataInfo = DataInfoUtil.fromMessage(message);
@@ -154,10 +208,10 @@ public class BatchDataProcessor {
                 LOGGER.error("解析消息失败: {}", message, e);
             }
         }
-        
+
         // 按时间排序
         Collections.sort(dataInfos, DataInfoHappenedDateComparator.INSTANCE);
-        
+
         // 批量处理
         processDataInfos(dataInfos);
     }
@@ -167,36 +221,47 @@ public class BatchDataProcessor {
 ### 使用 TimedValue
 
 ```java
-import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.dcti.sdk.util.TimedValueHappenedDateComparator;
+import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 
-// 创建 TimedValue 对象（不包含数据点 ID）
-TimedValue timedValue = new TimedValue("42.0", new Date());
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-// 使用 TimedValue 比较器
-List<TimedValue> timedValues = Arrays.asList(timedValue);
-Collections.sort(timedValues, TimedValueHappenedDateComparator.INSTANCE);
+public class Example {
+
+    @SuppressWarnings({"UnnecessaryModifier", "ArraysAsListWithZeroOrOneArgument", "Java8ListSort"})
+    public static void main(String[] args) {
+        // 创建 TimedValue 对象（不包含数据点 ID）。
+        TimedValue timedValue = new TimedValue("42.0", new Date());
+        // 使用 TimedValue 比较器。
+        List<TimedValue> timedValues = Arrays.asList(timedValue);
+        Collections.sort(timedValues, TimedValueHappenedDateComparator.INSTANCE);
+    }
+}
 ```
 
 ### 自定义数据转换
 
 ```java
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
 public class CustomDataConverter {
-    
+
     public DataInfo convertFromBusinessObject(BusinessData businessData) {
         return new DataInfo(
-            businessData.getPointId(),
-            String.valueOf(businessData.getValue()),
-            businessData.getTimestamp()
+                businessData.getPointId(),
+                String.valueOf(businessData.getValue()),
+                businessData.getTimestamp()
         );
     }
-    
+
     public BusinessData convertToBusinessObject(DataInfo dataInfo) {
         // ... 业务对象转换逻辑 ...
         return new BusinessData(
-            dataInfo.getPointLongId(),
-            Double.parseDouble(dataInfo.getValue()),
-            dataInfo.getHappenedDate()
+                dataInfo.getPointLongId(),
+                Double.parseDouble(dataInfo.getValue()),
+                dataInfo.getHappenedDate()
         );
     }
 }
@@ -207,40 +272,61 @@ public class CustomDataConverter {
 ### 1. 错误处理
 
 ```java
-public DataInfo safeParseMessage(String message) {
-    try {
-        return DataInfoUtil.fromMessage(message);
-    } catch (Exception e) {
-        LOGGER.error("解析DataInfo失败: {}", message, e);
-        return null; // 或者抛出业务异常
+import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
+public class Example {
+
+    public DataInfo safeParseMessage(String message) {
+        try {
+            return DataInfoUtil.fromMessage(message);
+        } catch (Exception e) {
+            LOGGER.error("解析 DataInfo 失败: {}", message, e);
+            return null; // 或者抛出业务异常
+        }
     }
 }
 ```
 
 ### 2. 性能优化
 
+对于大量数据的处理，考虑使用批量操作：
+
 ```java
-// 对于大量数据的处理，考虑使用批量操作
-public void processLargeDataset(List<String> messages) {
-    List<DataInfo> validData = messages.parallelStream()
-        .map(this::safeParseMessage)
-        .filter(Objects::nonNull)
-        .collect(Collectors.toList());
-    
-    // 批量处理有效数据
-    batchProcessor.process(validData);
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+public class Example {
+
+    public void processLargeDataset(List<String> messages) {
+        List<DataInfo> validData = messages.parallelStream()
+                .map(this::safeParseMessage)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        // 批量处理有效数据
+        batchProcessor.process(validData);
+    }
 }
 ```
 
 ### 3. 数据验证
 
 ```java
-public boolean isValidDataInfo(DataInfo dataInfo) {
-    return dataInfo != null 
-        && dataInfo.getPointLongId() > 0 
-        && dataInfo.getValue() != null 
-        && !dataInfo.getValue().trim().isEmpty()
-        && dataInfo.getHappenedDate() != null;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+
+public class Example {
+
+    public boolean isValidDataInfo(DataInfo dataInfo) {
+        return dataInfo != null
+                && dataInfo.getPointLongId() > 0
+                && dataInfo.getValue() != null
+                && !dataInfo.getValue().trim().isEmpty()
+                && dataInfo.getHappenedDate() != null;
+    }
 }
 ```
 
