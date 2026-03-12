@@ -19,3 +19,4 @@
 ## 如何使用
 
 - [Usage Guide](./UsageGuide.md) - DCTI 的详细使用指南，包含实际应用场景和代码示例。
+- [Message Format](./MessageFormat.md) - DCTI 默认消息格式说明，介绍 JSON 字段结构、字段含义和兼容性注意事项。
