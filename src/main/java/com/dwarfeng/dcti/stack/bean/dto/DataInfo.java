@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class DataInfo implements Dto {
 
-    private static final long serialVersionUID = 6360037498642277881L;
+    private static final long serialVersionUID = 5133102465235824196L;
 
     /**
      * 数据点的 UUID。
@@ -28,14 +28,23 @@ public class DataInfo implements Dto {
      * 数据值的发生日期。
      */
     private Date happenedDate;
+    /**
+     * 数据值发生日期对应毫秒中的纳秒偏移。
+     */
+    private int happenedDateNanoOffset;
 
     public DataInfo() {
     }
 
     public DataInfo(long pointLongId, String value, Date happenedDate) {
+        this(pointLongId, value, happenedDate, 0);
+    }
+
+    public DataInfo(long pointLongId, String value, Date happenedDate, int happenedDateNanoOffset) {
         this.pointLongId = pointLongId;
         this.value = value;
         this.happenedDate = happenedDate;
+        this.happenedDateNanoOffset = happenedDateNanoOffset;
     }
 
     public long getPointLongId() {
@@ -62,12 +71,21 @@ public class DataInfo implements Dto {
         this.happenedDate = happenedDate;
     }
 
+    public int getHappenedDateNanoOffset() {
+        return happenedDateNanoOffset;
+    }
+
+    public void setHappenedDateNanoOffset(int happenedDateNanoOffset) {
+        this.happenedDateNanoOffset = happenedDateNanoOffset;
+    }
+
     @Override
     public String toString() {
         return "DataInfo{" +
                 "pointLongId=" + pointLongId +
                 ", value='" + value + '\'' +
                 ", happenedDate=" + happenedDate +
+                ", happenedDateNanoOffset=" + happenedDateNanoOffset +
                 '}';
     }
 }

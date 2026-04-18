@@ -3,8 +3,12 @@ package com.dwarfeng.dcti.sdk.util;
 import com.alibaba.fastjson.JSON;
 import com.dwarfeng.dcti.sdk.bean.dto.FastJsonDataInfo;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+import com.dwarfeng.dutil.basic.time.TimeUtil;
 
 import javax.annotation.Nonnull;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Objects;
 
 /**
  * 数据点工具类。
@@ -34,6 +38,39 @@ public class DataInfoUtil {
     public static DataInfo fromMessage(@Nonnull String message) {
         FastJsonDataInfo fastJsonDataInfo = JSON.parseObject(message, FastJsonDataInfo.class);
         return FastJsonDataInfo.toStackBean(fastJsonDataInfo);
+    }
+
+    /**
+     * 将指定数据信息中的发生时间转换为时间点。
+     *
+     * @param dataInfo 指定的数据信息。
+     * @return 指定数据信息中的发生时间表示的时间点。
+     * @throws NullPointerException     参数为 {@code null} 或发生时间字段为 {@code null}。
+     * @throws IllegalArgumentException 纳秒偏移超出合法范围。
+     * @since 2.0.0
+     */
+    @Nonnull
+    public static Instant getHappenedInstant(@Nonnull DataInfo dataInfo) {
+        Objects.requireNonNull(dataInfo, "dataInfo 不能为空");
+        Date happenedDate = Objects.requireNonNull(dataInfo.getHappenedDate(), "dataInfo.happenedDate 不能为空");
+        int happenedDateNanoOffset = dataInfo.getHappenedDateNanoOffset();
+        TimeUtil.checkNanoOffset(happenedDateNanoOffset);
+        return TimeUtil.toInstant(happenedDate, happenedDateNanoOffset);
+    }
+
+    /**
+     * 使用指定的发生时间点设置指定数据信息的发生时间。
+     *
+     * @param dataInfo 指定的数据信息。
+     * @param instant  指定的发生时间点。
+     * @throws NullPointerException 参数为 {@code null}。
+     * @since 2.0.0
+     */
+    public static void setHappenedInstant(@Nonnull DataInfo dataInfo, @Nonnull Instant instant) {
+        Objects.requireNonNull(dataInfo, "dataInfo 不能为空");
+        Objects.requireNonNull(instant, "instant 不能为空");
+        dataInfo.setHappenedDate(TimeUtil.toDate(instant));
+        dataInfo.setHappenedDateNanoOffset(TimeUtil.toNanoOffset(instant));
     }
 
     private DataInfoUtil() {

@@ -8,14 +8,14 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * 适用于 FastJson 的 DataInfo。
+ * FastJson 数据值。
  *
  * @author DwArFeng
  * @since 1.0.0
  */
 public class FastJsonDataInfo implements Dto {
 
-    private static final long serialVersionUID = -195639022270422852L;
+    private static final long serialVersionUID = -3903788100115812761L;
 
     /**
      * 通过指定的 DataInfo 生成对应的 FastJsonDataInfo。
@@ -30,7 +30,8 @@ public class FastJsonDataInfo implements Dto {
         return new FastJsonDataInfo(
                 dataInfo.getPointLongId(),
                 dataInfo.getValue(),
-                dataInfo.getHappenedDate()
+                dataInfo.getHappenedDate(),
+                dataInfo.getHappenedDateNanoOffset()
         );
     }
 
@@ -47,7 +48,8 @@ public class FastJsonDataInfo implements Dto {
         return new DataInfo(
                 fastJsonDataInfo.getPointLongId(),
                 fastJsonDataInfo.getValue(),
-                fastJsonDataInfo.getHappenedDate()
+                fastJsonDataInfo.getHappenedDate(),
+                fastJsonDataInfo.getHappenedDateNanoOffset()
         );
     }
 
@@ -60,13 +62,21 @@ public class FastJsonDataInfo implements Dto {
     @JSONField(name = "happened_date", ordinal = 3)
     private Date happenedDate;
 
+    @JSONField(name = "happened_date_nano_offset", ordinal = 4)
+    private int happenedDateNanoOffset;
+
     public FastJsonDataInfo() {
     }
 
     public FastJsonDataInfo(long pointLongId, String value, Date happenedDate) {
+        this(pointLongId, value, happenedDate, 0);
+    }
+
+    public FastJsonDataInfo(long pointLongId, String value, Date happenedDate, int happenedDateNanoOffset) {
         this.pointLongId = pointLongId;
         this.value = value;
         this.happenedDate = happenedDate;
+        this.happenedDateNanoOffset = happenedDateNanoOffset;
     }
 
     public long getPointLongId() {
@@ -93,12 +103,21 @@ public class FastJsonDataInfo implements Dto {
         this.happenedDate = happenedDate;
     }
 
+    public int getHappenedDateNanoOffset() {
+        return happenedDateNanoOffset;
+    }
+
+    public void setHappenedDateNanoOffset(int happenedDateNanoOffset) {
+        this.happenedDateNanoOffset = happenedDateNanoOffset;
+    }
+
     @Override
     public String toString() {
         return "FastJsonDataInfo{" +
                 "pointLongId=" + pointLongId +
                 ", value='" + value + '\'' +
                 ", happenedDate=" + happenedDate +
+                ", happenedDateNanoOffset=" + happenedDateNanoOffset +
                 '}';
     }
 }

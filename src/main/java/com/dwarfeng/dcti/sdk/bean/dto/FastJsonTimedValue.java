@@ -8,14 +8,14 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * 适用于 FastJson 的 TimedValue。
+ * FastJson 拥有发生时间的数据值。
  *
  * @author DwArFeng
  * @since 1.1.0
  */
 public class FastJsonTimedValue implements Dto {
 
-    private static final long serialVersionUID = 5518358988835360188L;
+    private static final long serialVersionUID = -6265590051386084423L;
 
     /**
      * 通过指定的 TimedValue 生成对应的 FastJsonTimedValue。
@@ -29,7 +29,8 @@ public class FastJsonTimedValue implements Dto {
         }
         return new FastJsonTimedValue(
                 dataInfo.getValue(),
-                dataInfo.getHappenedDate()
+                dataInfo.getHappenedDate(),
+                dataInfo.getHappenedDateNanoOffset()
         );
     }
 
@@ -45,7 +46,8 @@ public class FastJsonTimedValue implements Dto {
         }
         return new TimedValue(
                 fastJsonTimedValue.getValue(),
-                fastJsonTimedValue.getHappenedDate()
+                fastJsonTimedValue.getHappenedDate(),
+                fastJsonTimedValue.getHappenedDateNanoOffset()
         );
     }
 
@@ -55,12 +57,20 @@ public class FastJsonTimedValue implements Dto {
     @JSONField(name = "happened_date", ordinal = 2)
     private Date happenedDate;
 
+    @JSONField(name = "happened_date_nano_offset", ordinal = 3)
+    private int happenedDateNanoOffset;
+
     public FastJsonTimedValue() {
     }
 
     public FastJsonTimedValue(String value, Date happenedDate) {
+        this(value, happenedDate, 0);
+    }
+
+    public FastJsonTimedValue(String value, Date happenedDate, int happenedDateNanoOffset) {
         this.value = value;
         this.happenedDate = happenedDate;
+        this.happenedDateNanoOffset = happenedDateNanoOffset;
     }
 
     public String getValue() {
@@ -79,11 +89,20 @@ public class FastJsonTimedValue implements Dto {
         this.happenedDate = happenedDate;
     }
 
+    public int getHappenedDateNanoOffset() {
+        return happenedDateNanoOffset;
+    }
+
+    public void setHappenedDateNanoOffset(int happenedDateNanoOffset) {
+        this.happenedDateNanoOffset = happenedDateNanoOffset;
+    }
+
     @Override
     public String toString() {
         return "FastJsonTimedValue{" +
                 "value='" + value + '\'' +
                 ", happenedDate=" + happenedDate +
+                ", happenedDateNanoOffset=" + happenedDateNanoOffset +
                 '}';
     }
 }

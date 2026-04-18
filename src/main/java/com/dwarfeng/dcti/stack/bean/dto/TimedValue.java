@@ -12,17 +12,23 @@ import java.util.Date;
  */
 public class TimedValue implements Dto {
 
-    private static final long serialVersionUID = 1904737116172014591L;
+    private static final long serialVersionUID = -99154816999182156L;
 
     private String value;
     private Date happenedDate;
+    private int happenedDateNanoOffset;
 
     public TimedValue() {
     }
 
     public TimedValue(String value, Date happenedDate) {
+        this(value, happenedDate, 0);
+    }
+
+    public TimedValue(String value, Date happenedDate, int happenedDateNanoOffset) {
         this.value = value;
         this.happenedDate = happenedDate;
+        this.happenedDateNanoOffset = happenedDateNanoOffset;
     }
 
     public String getValue() {
@@ -41,11 +47,20 @@ public class TimedValue implements Dto {
         this.happenedDate = happenedDate;
     }
 
+    public int getHappenedDateNanoOffset() {
+        return happenedDateNanoOffset;
+    }
+
+    public void setHappenedDateNanoOffset(int happenedDateNanoOffset) {
+        this.happenedDateNanoOffset = happenedDateNanoOffset;
+    }
+
     @Override
     public String toString() {
         return "TimedValue{" +
                 "value='" + value + '\'' +
                 ", happenedDate=" + happenedDate +
+                ", happenedDateNanoOffset=" + happenedDateNanoOffset +
                 '}';
     }
 }
