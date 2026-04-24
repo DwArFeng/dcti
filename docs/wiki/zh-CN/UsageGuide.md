@@ -11,7 +11,7 @@ DCTI 提供了标准化的数据传输格式，使得不同系统之间可以方
 - **TimedValue**: 简化的时间值结构
 - **FastJsonDataInfo/FastJsonTimedValue**: JSON 序列化版本
 - **DataInfoUtil/TimedValueUtil**: 数据转换与时间点转换工具类（支持 `Instant`）
-- **比较器**: 基于时间的排序工具（区分毫秒级和纳秒偏移级）
+- **CompareUtil**: 统一比较器入口，提供 `Long`、`Instant`、`DataInfo`、`TimedValue` 的排序常量
 
 ## 快速开始
 
@@ -69,6 +69,35 @@ public class Example {
     }
 }
 ```
+
+#### 使用 newInstance(Instant) 快速构造 Bean
+
+```java
+import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
+import com.dwarfeng.dcti.sdk.util.TimedValueUtil;
+import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
+
+import java.time.Instant;
+
+public class Example {
+
+    @SuppressWarnings("UnnecessaryModifier")
+    public static void main(String[] args) {
+        Instant happenedInstant = Instant.parse("2024-01-15T02:30:00.123456789Z");
+
+        // 一步完成对象创建与时间语义拆分（happenedDate + happenedDateNanoOffset）。
+        DataInfo dataInfo = DataInfoUtil.newInstance(12345L, "25.6", happenedInstant);
+        TimedValue timedValue = TimedValueUtil.newInstance("25.6", happenedInstant);
+
+        // 可通过 getHappenedInstant 还原为同一 Instant。
+        System.out.println(DataInfoUtil.getHappenedInstant(dataInfo));
+        System.out.println(TimedValueUtil.getHappenedInstant(timedValue));
+    }
+}
+```
+
+推荐优先使用 `newInstance(..., Instant)`，避免手动拼装 `Date` 与纳秒偏移导致的精度误差或语义不一致。
 
 #### JSON 序列化和反序列化
 
@@ -169,7 +198,7 @@ public class SensorDataCollector {
 ### 数据排序和比较
 
 ```java
-import com.dwarfeng.dcti.sdk.util.DataInfoHappenedInstantComparator;
+import com.dwarfeng.dcti.sdk.util.CompareUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 
 import java.util.Collections;
@@ -180,25 +209,26 @@ public class DataProcessor {
 
     @SuppressWarnings({"Java8ListSort", "SimplifyStreamApiCallChains"})
     public void sortDataByTime(List<DataInfo> dataList) {
-        // 使用 DCTI 提供的时间点比较器进行排序（日期 + 毫秒内纳秒偏移）。
-        Collections.sort(dataList, DataInfoHappenedInstantComparator.INSTANCE);
+        // 默认排序：先按 pointLongId 升序，再按 happenedInstant 升序。
+        Collections.sort(dataList, CompareUtil.DATA_INFO_DEFAULT_COMPARATOR);
 
-        // 或者使用 Java 8 的 Stream API
+        // 按发生时间降序（日期 + 毫秒内纳秒偏移）
         List<DataInfo> sortedData = dataList.stream()
-                .sorted(DataInfoHappenedInstantComparator.INSTANCE)
+                .sorted(CompareUtil.DATA_INFO_HAPPENED_INSTANT_DESC_COMPARATOR)
                 .collect(Collectors.toList());
     }
 }
 ```
 
-`DataInfoHappenedDateComparator` 仅用于历史兼容，已标记为过时，不推荐在任何场景继续使用。
+`CompareUtil.DATA_INFO_DEFAULT_COMPARATOR` 适合大多数点位数据的稳定排序场景。
+`DataInfoHappenedDateComparator` 仅用于历史兼容，已标记为过时，不推荐在任何新场景继续使用。
 
 ## 高级用法
 
 ### 批量数据处理
 
 ```java
-import com.dwarfeng.dcti.sdk.util.DataInfoHappenedInstantComparator;
+import com.dwarfeng.dcti.sdk.util.CompareUtil;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 
@@ -221,8 +251,8 @@ public class BatchDataProcessor {
             }
         }
 
-        // 按时间点排序（日期 + 毫秒内纳秒偏移）。
-        Collections.sort(dataInfos, DataInfoHappenedInstantComparator.INSTANCE);
+        // 按发生时间升序（日期 + 毫秒内纳秒偏移）。
+        Collections.sort(dataInfos, CompareUtil.DATA_INFO_HAPPENED_INSTANT_ASC_COMPARATOR);
 
         // 批量处理
         processDataInfos(dataInfos);
@@ -233,7 +263,7 @@ public class BatchDataProcessor {
 ### 使用 TimedValue
 
 ```java
-import com.dwarfeng.dcti.sdk.util.TimedValueHappenedInstantComparator;
+import com.dwarfeng.dcti.sdk.util.CompareUtil;
 import com.dwarfeng.dcti.sdk.util.TimedValueUtil;
 import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 
@@ -251,9 +281,9 @@ public class Example {
         TimedValue timedValue = new TimedValue("42.0", new Date(), 123456);
         // 通过工具类将时间设置为完整 Instant。
         TimedValueUtil.setHappenedInstant(timedValue, Instant.parse("2024-01-15T02:30:00.123456789Z"));
-        // 使用 TimedValue 时间点比较器。
+        // TimedValue 默认排序就是按发生时间升序。
         List<TimedValue> timedValues = Arrays.asList(timedValue);
-        Collections.sort(timedValues, TimedValueHappenedInstantComparator.INSTANCE);
+        Collections.sort(timedValues, CompareUtil.TIMED_VALUE_DEFAULT_COMPARATOR);
     }
 }
 ```
@@ -365,6 +395,7 @@ public class Example {
 1. **数据格式**: DataInfo 中的 value 字段始终为字符串类型，需要根据业务需求进行类型转换
 2. **时间处理**: `happenedDate` 与 `happenedDateNanoOffset` 共同组成完整时间点，
    跨系统建议统一使用 `DataInfoUtil/TimedValueUtil` 与 `Instant` 进行转换
-3. **排序策略**: 使用 `DataInfoHappenedInstantComparator` / `TimedValueHappenedInstantComparator`；
-   `HappenedDateComparator` 已过时且不推荐使用
+3. **排序策略**: 优先使用 `CompareUtil` 的比较器常量（如 `DATA_INFO_DEFAULT_COMPARATOR`、
+   `DATA_INFO_HAPPENED_INSTANT_ASC_COMPARATOR`、`TIMED_VALUE_DEFAULT_COMPARATOR`）；
+   `*HappenedDateComparator` 仅用于旧 Date 语义兼容
 4. **性能考虑**: 对于大量数据，考虑使用批量处理和异步处理

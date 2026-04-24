@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/UsageGuide.md。
+
 - 增加部分工具类的功能。
   - com.dwarfeng.dcti.sdk.util.DataInfoUtil。
   - com.dwarfeng.dcti.sdk.util.TimedValueUtil。
