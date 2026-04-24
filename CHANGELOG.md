@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/TimeSemantics.md。
+  - docs/wiki/zh-CN/QuickStart.md。
+
 - Wiki 更新。
   - docs/wiki/zh-CN/MessageFormat.md。
   - docs/wiki/zh-CN/UsageGuide.md。
