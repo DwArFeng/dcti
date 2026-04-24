@@ -70,4 +70,24 @@ public class DataInfoUtilTest {
         dataInfo.setHappenedDateNanoOffset(TimeUtil.MIN_NANO_OFFSET - 1);
         DataInfoUtil.getHappenedInstant(dataInfo);
     }
+
+    @Test
+    public void testNewInstance() {
+        long expectedPointLongId = 123456789L;
+        String expectedValue = "hello";
+        Instant expectedInstant = Instant.ofEpochSecond(1713333333L, 123456789L);
+
+        DataInfo dataInfo = DataInfoUtil.newInstance(expectedPointLongId, expectedValue, expectedInstant);
+
+        Assert.assertEquals(expectedPointLongId, dataInfo.getPointLongId());
+        Assert.assertEquals(expectedValue, dataInfo.getValue());
+        Assert.assertEquals(expectedInstant, DataInfoUtil.getHappenedInstant(dataInfo));
+    }
+
+    // 该方法本身是用来进行异常测试的，故忽略相关异常警告。
+    @SuppressWarnings("DataFlowIssue")
+    @Test(expected = NullPointerException.class)
+    public void testNewInstanceWithNullInstant() {
+        DataInfoUtil.newInstance(123456789L, "hello", null);
+    }
 }

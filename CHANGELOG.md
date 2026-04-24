@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 增加部分工具类的功能。
+  - com.dwarfeng.dcti.sdk.util.DataInfoUtil。
+  - com.dwarfeng.dcti.sdk.util.TimedValueUtil。
+
 - 新增工具类。
   - com.dwarfeng.dcti.sdk.util.CompareUtil。
 

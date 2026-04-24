@@ -47,6 +47,21 @@ public class TimedValueUtil {
         timedValue.setHappenedDateNanoOffset(TimeUtil.toNanoOffset(instant));
     }
 
+    /**
+     * 根据指定参数构造新的数据值。
+     *
+     * @param value           指定的数据值。
+     * @param happenedInstant 指定的发生时间点。
+     * @return 构造的数据值。
+     * @throws NullPointerException 参数 <code>happenedInstant</code> 为 <code>null</code>。
+     * @since 2.0.1
+     */
+    @Nonnull
+    public static TimedValue newInstance(String value, @Nonnull Instant happenedInstant) {
+        Objects.requireNonNull(happenedInstant, "happenedInstant 不能为空");
+        return new TimedValue(value, TimeUtil.toDate(happenedInstant), TimeUtil.toNanoOffset(happenedInstant));
+    }
+
     private TimedValueUtil() {
         throw new IllegalStateException("禁止外部实例化");
     }
