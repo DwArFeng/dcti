@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/MessageFormat.md。
+  - docs/wiki/zh-CN/UsageGuide.md。
+
 - 增强数据时间精度支持。
   - 增加 `com.dwarfeng.dcti.stack.bean.dto.DataInfo.happenedDateNanoOffset` 字段。
   - 增加 `com.dwarfeng.dcti.stack.bean.dto.TimedValue.happenedDateNanoOffset` 字段。

@@ -11,14 +11,16 @@
 - `point_long_id`
 - `value`
 - `happened_date`
+- `happened_date_nano_offset`
 
 ## DataInfo 结构
 
-`DataInfo` 包含三个核心字段：
+`DataInfo` 包含四个核心字段：
 
 - `pointLongId` - 数据点的长整型主键。
 - `value` - 文本格式的数据值。
 - `happenedDate` - 数据的发生时间。
+- `happenedDateNanoOffset` - 发生时间所在毫秒内的纳秒偏移。
 
 对应的 Java 结构如下：
 
@@ -27,6 +29,7 @@ public class DataInfo {
     private long pointLongId;
     private String value;
     private Date happenedDate;
+    private int happenedDateNanoOffset;
 }
 ```
 
@@ -34,11 +37,12 @@ public class DataInfo {
 
 默认消息格式由 `FastJsonDataInfo` 定义，字段映射关系如下：
 
-| Java 字段        | JSON 字段         |
-|----------------|-----------------|
-| `pointLongId`  | `point_long_id` |
-| `value`        | `value`         |
-| `happenedDate` | `happened_date` |
+| Java 字段                  | JSON 字段                     |
+|--------------------------|-----------------------------|
+| `pointLongId`            | `point_long_id`             |
+| `value`                  | `value`                     |
+| `happenedDate`           | `happened_date`             |
+| `happenedDateNanoOffset` | `happened_date_nano_offset` |
 
 这意味着，当您使用 `DataInfoUtil.toMessage(dataInfo)` 时，得到的文本会遵循上述字段命名规则；
 当您使用 `DataInfoUtil.fromMessage(message)` 时，程序也会按上述字段名进行解析。
@@ -51,7 +55,8 @@ public class DataInfo {
 {
   "point_long_id": 12345,
   "value": "25.6",
-  "happened_date": 1710000000000
+  "happened_date": 1710000000000,
+  "happened_date_nano_offset": 123456
 }
 ```
 
@@ -60,6 +65,7 @@ public class DataInfo {
 - `point_long_id` 表示数据点主键。
 - `value` 是字符串类型的数据值。
 - `happened_date` 表示数据发生时间。
+- `happened_date_nano_offset` 表示 `happened_date` 所在毫秒内的纳秒偏移。
 
 ## 字段说明
 
@@ -83,6 +89,13 @@ public class DataInfo {
 默认实现直接使用 Fastjson 对 `Date` 进行序列化与反序列化，因此该字段的具体文本形式取决于实际序列化配置。
 在默认使用场景下，建议上下游统一约定日期格式；如果您需要固定格式，应在业务层进行封装，或实现自定义的消息转换工具。
 
+### happened_date_nano_offset
+
+`happened_date_nano_offset` 对应 `DataInfo.happenedDateNanoOffset`。
+
+该字段用于表达 `happened_date` 所在毫秒内的纳秒偏移，范围为 `[0, 999999]`。
+通过该字段，您可以在毫秒级时间点的基础上表达更细粒度的时间信息，适用于需要区分同一毫秒内多个事件的场景。
+
 ## 编解码流程
 
 默认编解码流程如下：
@@ -101,8 +114,21 @@ public class DataInfo {
 
 ### 字段命名
 
-默认实现要求消息中的字段名与 `FastJsonDataInfo` 保持一致。如果消息来自外部系统，且字段名不是
-`point_long_id`、`value`、`happened_date`，则不能直接使用 `DataInfoUtil`，应在业务层自行适配。
+默认实现要求消息中的字段名与 `FastJsonDataInfo` 保持一致。
+如果消息来自外部系统，且字段名不是 `point_long_id`、`value`、`happened_date`、`happened_date_nano_offset`，
+则不能直接使用 `DataInfoUtil`，应在业务层自行适配。
+
+### 时间字段语义
+
+当前默认协议包含 `happened_date` 与 `happened_date_nano_offset`。
+其中 `happened_date` 表达毫秒级时间基线，`happened_date_nano_offset` 表达毫秒内偏移，两者组合用于表达更高精度的时间点。
+如果您的消息协议不包含 `happened_date_nano_offset`，则只能表达毫秒级时间语义，且无法区分同一毫秒内的多个事件。
+
+### 旧消息兼容
+
+旧版本消息与新版本消息兼容。
+旧版本消息不包含 `happened_date_nano_offset` 字段，反序列化后该字段默认为 `0`，因此仍然可以正确解析并保持原有的毫秒级时间语义。
+新版本消息包含 `happened_date_nano_offset` 字段，反序列化后该字段会被正确解析，提供更高精度的时间表达能力。
 
 ### value 的业务语义
 
@@ -120,6 +146,6 @@ public class DataInfo {
 - 若需要与外部协议对接，建议在业务层封装一层“消息对象 ↔ DataInfo”的转换器。
 - 若希望固定日期格式、字段名或协议结构，建议使用自定义消息工具，而不是直接修改 `DataInfoUtil`。
 
-## 参考
+## 参阅
 
-- [Usage Guide](./UsageGuide.md) - DCTI 的基本使用说明。
+- [Usage Guide](./UsageGuide.md) - DCTI 的详细使用指南，包含实际应用场景和代码示例。
