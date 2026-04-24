@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- 新增工具类。
+  - com.dwarfeng.dcti.sdk.util.CompareUtil。
 
 ### Bug 修复
 
