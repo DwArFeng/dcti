@@ -25,6 +25,7 @@ import java.util.List;
 @ContextConfiguration(locations = "classpath:spring/application-context*.xml")
 public class DctiQosHandlerImplTest {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private DctiQosHandler dctiQosHandler;
 

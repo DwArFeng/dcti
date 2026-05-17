@@ -3,6 +3,7 @@ package com.dwarfeng.dcti.node.configuration;
 import com.dwarfeng.dcti.impl.handler.DctiHandlerImpl;
 import com.dwarfeng.dcti.impl.handler.DctiQosHandlerImpl;
 import com.dwarfeng.dcti.impl.service.DctiQosServiceImpl;
+import com.dwarfeng.dcti.sdk.util.Constants;
 import com.dwarfeng.dcti.stack.handler.DctiHandler;
 import com.dwarfeng.dcti.stack.handler.DctiQosHandler;
 import com.dwarfeng.dcti.stack.service.DctiQosService;
@@ -24,7 +25,7 @@ public class SingletonHandlerConfiguration {
     /**
      * DCTI 处理器的 Bean 名称。
      */
-    public static final String BEAN_NAME_DCTI_HANDLER = "dctiHandler";
+    public static final String BEAN_NAME_DCTI_HANDLER = Constants.XSD_DEFAULT_DCTI_HANDLER_NAME;
 
     @Bean(name = BEAN_NAME_DCTI_HANDLER)
     public DctiHandler dctiHandler() {

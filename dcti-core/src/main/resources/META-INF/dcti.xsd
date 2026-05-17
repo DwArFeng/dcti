@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xsd:schema
+        xmlns="http://dwarfeng.com/schema/dcti"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:tool="http://www.springframework.org/schema/tool"
+        targetNamespace="http://dwarfeng.com/schema/dcti"
+        elementFormDefault="qualified"
+>
+
+    <xsd:import
+            namespace="http://www.springframework.org/schema/tool"
+            schemaLocation="https://www.springframework.org/schema/tool/spring-tool.xsd"
+    />
+
+    <xsd:annotation>
+        <xsd:documentation>
+            <![CDATA[DCTI 项目的命名空间支持。]]></xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:element name="handler">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[通过该元素配置 DctiHandler。]]>
+            </xsd:documentation>
+            <xsd:appinfo>
+                <tool:annotation>
+                    <tool:exports type="com.dwarfeng.dcti.stack.handler.DctiHandler"/>
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute
+                    name="handler-name"
+                    type="xsd:token"
+                    default="#{T(com.dwarfeng.dcti.sdk.util.Constants).XSD_DEFAULT_DCTI_HANDLER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[DctiHandler 的 bean 名称，默认为 dctiHandler。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="qos">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[通过该元素配置 DctiQosService。]]>
+            </xsd:documentation>
+            <xsd:appinfo>
+                <tool:annotation>
+                    <tool:exports type="com.dwarfeng.dcti.stack.service.DctiQosService"/>
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute
+                    name="qos-handler-name"
+                    type="xsd:token"
+                    default="#{T(com.dwarfeng.dcti.sdk.util.Constants).XSD_DEFAULT_DCTI_QOS_HANDLER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[DctiQosHandler 的 bean 名称，默认为 dctiQosHandler。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="qos-service-name"
+                    type="xsd:token"
+                    default="#{T(com.dwarfeng.dcti.sdk.util.Constants).XSD_DEFAULT_DCTI_QOS_SERVICE_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[DctiQosService 的 bean 名称，默认为 dctiQosService。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.String"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="handler-ref"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.dcti.sdk.util.Constants).XSD_DEFAULT_DCTI_HANDLER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[DctiHandler 的 bean 引用，默认为 dctiHandler。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation kind="ref">
+                            <tool:expected-type type="com.dwarfeng.dcti.stack.handler.DctiHandler"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute
+                    name="sem-ref"
+                    type="xsd:string"
+                    default="#{T(com.dwarfeng.dcti.sdk.util.Constants).XSD_DEFAULT_SERVICE_EXCEPTION_MAPPER_NAME}"
+            >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[ServiceExceptionMapper bean 引用，默认为 mapServiceExceptionMapper。]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation kind="ref">
+                            <tool:expected-type type="com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
