@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 重构项目结构。
+  - 与 subgrade 集成，处理器层与 subgrade 对齐。
+  - 与 subgrade 集成，栈异常与 subgrade 对齐。
+
 - 增加依赖。
   - 增加插件 `maven-clean-plugin` 以应用其新功能，版本为 `2.5`。
   - 增加依赖 `spring` 以应用其新功能，版本为 `5.3.39`。

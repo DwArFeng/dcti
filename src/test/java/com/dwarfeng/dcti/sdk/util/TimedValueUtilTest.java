@@ -4,6 +4,9 @@ import com.dwarfeng.dcti.stack.bean.dto.TimedValue;
 import com.dwarfeng.dutil.basic.time.TimeUtil;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.Instant;
 import java.util.Date;
@@ -14,6 +17,8 @@ import java.util.Date;
  * @author DwArFeng
  * @since 2.0.0
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:spring/application-context*.xml")
 public class TimedValueUtilTest {
 
     @Test
