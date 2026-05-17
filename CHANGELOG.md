@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 新增 QoS 服务。
+  - com.dwarfeng.dcti.stack.service.DctiQosService。
+
 - 为项目增加单例配置机制。
   - 增加 `com.dwarfeng.dcti.node.configuration.SingletonHandlerConfiguration` 单例配置类。
 

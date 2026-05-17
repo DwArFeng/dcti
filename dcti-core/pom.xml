@@ -88,6 +88,12 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-sdk</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>subgrade-impl</artifactId>
+            <version>${subgrade.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

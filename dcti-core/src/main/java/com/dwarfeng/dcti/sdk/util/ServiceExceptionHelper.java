@@ -1,8 +1,6 @@
 package com.dwarfeng.dcti.sdk.util;
 
-import com.dwarfeng.dcti.stack.exception.DataInfoDeserializeFailedException;
-import com.dwarfeng.dcti.stack.exception.DataInfoSerializeFailedException;
-import com.dwarfeng.dcti.stack.exception.DctiException;
+import com.dwarfeng.dcti.stack.exception.*;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 
 import java.util.HashMap;
@@ -36,6 +34,10 @@ public final class ServiceExceptionHelper {
         map.put(DctiException.class, ServiceExceptionCodes.DCTI_HANDLER_FAILED);
         map.put(DataInfoSerializeFailedException.class, ServiceExceptionCodes.DATA_INFO_SERIALIZE_FAILED);
         map.put(DataInfoDeserializeFailedException.class, ServiceExceptionCodes.DATA_INFO_DESERIALIZE_FAILED);
+        map.put(DctiQosException.class, ServiceExceptionCodes.DCTI_QOS_FAILED);
+        map.put(AmbiguousDctiHandlerException.class, ServiceExceptionCodes.AMBIGUOUS_DCTI_HANDLER);
+        map.put(NoDctiHandlerPresentException.class, ServiceExceptionCodes.NO_DCTI_HANDLER_PRESENT);
+        map.put(DctiHandlerNotFoundException.class, ServiceExceptionCodes.DCTI_QOS_HANDLER_NOT_FOUND);
 
         return map;
     }

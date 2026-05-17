@@ -20,6 +20,15 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(1), "data info serialize failed");
     public static final ServiceException.Code DATA_INFO_DESERIALIZE_FAILED =
             new ServiceException.Code(offset(2), "data info deserialize failed");
+    // QoS 路由异常。
+    public static final ServiceException.Code DCTI_QOS_FAILED =
+            new ServiceException.Code(offset(10), "dcti qos failed");
+    public static final ServiceException.Code AMBIGUOUS_DCTI_HANDLER =
+            new ServiceException.Code(offset(11), "ambiguous dcti handler");
+    public static final ServiceException.Code NO_DCTI_HANDLER_PRESENT =
+            new ServiceException.Code(offset(12), "no dcti handler present");
+    public static final ServiceException.Code DCTI_QOS_HANDLER_NOT_FOUND =
+            new ServiceException.Code(offset(13), "dcti qos handler not found");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -47,6 +56,10 @@ public final class ServiceExceptionCodes {
         DCTI_HANDLER_FAILED.setCode(offset(0));
         DATA_INFO_SERIALIZE_FAILED.setCode(offset(1));
         DATA_INFO_DESERIALIZE_FAILED.setCode(offset(2));
+        DCTI_QOS_FAILED.setCode(offset(10));
+        AMBIGUOUS_DCTI_HANDLER.setCode(offset(11));
+        NO_DCTI_HANDLER_PRESENT.setCode(offset(12));
+        DCTI_QOS_HANDLER_NOT_FOUND.setCode(offset(13));
     }
 
     private ServiceExceptionCodes() {
