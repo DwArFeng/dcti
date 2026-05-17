@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 重构项目模块。
+  - 新增 `dcti-core` 子模块，并迁移原有代码至该模块。
+  - 新增 `dcti-api` 子模块。
+
 - 重构项目结构。
   - 与 subgrade 集成，处理器层与 subgrade 对齐。
   - 与 subgrade 集成，栈异常与 subgrade 对齐。

@@ -71,9 +71,11 @@ buildNumber.properties
 #################
 ## Logger Files
 #################
-/logs/
+/dcti-core/logs/
+/dcti-api/logs/
 
 #################
 ## Configuration Files
 #################
-/conf/
+/dcti-core/conf/
+/dcti-api/conf/

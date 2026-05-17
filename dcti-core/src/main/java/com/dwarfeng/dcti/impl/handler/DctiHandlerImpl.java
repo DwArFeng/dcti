@@ -34,7 +34,6 @@ public class DctiHandlerImpl implements DctiHandler {
     @Override
     public String toMessage(DataInfo dataInfo) throws HandlerException {
         try {
-            Objects.requireNonNull(dataInfo, "参数 dataInfo 不能为 null");
             return toMessage0(dataInfo);
         } catch (Exception e) {
             throw DctiExceptionHelper.parse(e);
@@ -43,6 +42,7 @@ public class DctiHandlerImpl implements DctiHandler {
 
     private String toMessage0(DataInfo dataInfo) throws Exception {
         try {
+            Objects.requireNonNull(dataInfo, "参数 dataInfo 不能为 null");
             return DataInfoUtil.toMessage(dataInfo);
         } catch (Exception e) {
             throw new DataInfoSerializeFailedException(e, dataInfo);
@@ -53,10 +53,6 @@ public class DctiHandlerImpl implements DctiHandler {
     @Override
     public DataInfo fromMessage(String message) throws HandlerException {
         try {
-            Objects.requireNonNull(message, "参数 message 不能为 null");
-            if (StringUtils.isBlank(message)) {
-                throw new IllegalArgumentException("参数 message 不能为空或空白");
-            }
             DataInfo dataInfo = fromMessage0(message);
             if (dataInfo == null) {
                 throw new IllegalStateException("反序列化得到的 DataInfo 不能为 null");
@@ -69,9 +65,13 @@ public class DctiHandlerImpl implements DctiHandler {
 
     private DataInfo fromMessage0(String message) throws Exception {
         try {
+            Objects.requireNonNull(message, "参数 message 不能为 null");
+            if (StringUtils.isBlank(message)) {
+                throw new IllegalArgumentException("参数 message 不能为空或空白");
+            }
             return DataInfoUtil.fromMessage(message);
         } catch (Exception e) {
-            throw new DataInfoDeserializeFailedException(message);
+            throw new DataInfoDeserializeFailedException(e, message);
         }
     }
 }
