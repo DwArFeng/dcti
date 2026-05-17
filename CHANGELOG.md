@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 为项目增加单例配置机制。
+  - 增加 `com.dwarfeng.dcti.node.configuration.SingletonHandlerConfiguration` 单例配置类。
+
 - 重构项目模块。
   - 新增 `dcti-core` 子模块，并迁移原有代码至该模块。
   - 新增 `dcti-api` 子模块。
