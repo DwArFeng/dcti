@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `dcti-core` 模块增加示例代码。
+  - com.dwarfeng.dcti.node.example.DecodeExample。
+  - com.dwarfeng.dcti.node.example.EncodeExample。
+
 - 新增 spring-telqos 框架集成指令。
   - com.dwarfeng.ftp.api.integration.springtelqos.FtpCommand。
 
