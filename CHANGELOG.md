@@ -7,6 +7,7 @@
 - 更新 README.md。
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/UsageGuide.md。
   - docs/wiki/zh-CN/Introduction.md。
 
 - `dcti-core` 模块增加示例代码。

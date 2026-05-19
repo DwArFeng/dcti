@@ -35,9 +35,14 @@ DCTI 提供了标准化的数据传输格式，使得不同系统之间可以方
         <!-- 省略其他配置 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>dcti</artifactId>
+            <artifactId>dcti-core</artifactId>
             <version>${dcti.version}</version>
         </dependency>
+       <dependency>
+          <groupId>com.dwarfeng</groupId>
+          <artifactId>dcti-api</artifactId>
+          <version>${dcti.version}</version>
+       </dependency>
         <!-- 省略其他配置 -->
     </dependencies>
     <!-- 省略其他配置 -->
