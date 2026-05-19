@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 新增 spring-telqos 框架集成指令。
+  - com.dwarfeng.ftp.api.integration.springtelqos.FtpCommand。
+
 - 为项目增加 xsd 配置机制。
   - 增加 `META-INF/dcti.xsd` 文件。
   - 增加 `com.dwarfeng.dcti.node.configuration.DctiNamespaceHandlerSupport` 及对应的定义解析器。
@@ -24,6 +27,7 @@
   - 与 subgrade 集成，栈异常与 subgrade 对齐。
 
 - 增加依赖。
+  - 增加依赖 `spring-telqos` 以应用其新功能，版本为 `2.0.1.a`。
   - 增加插件 `maven-clean-plugin` 以应用其新功能，版本为 `2.5`。
   - 增加依赖 `spring` 以应用其新功能，版本为 `5.3.39`。
   - 增加依赖 `commons-lang3` 以应用其新功能，版本为 `3.18.0`。
