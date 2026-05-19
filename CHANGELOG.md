@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 更新 README.md。
+
+- Wiki 更新。
+  - docs/wiki/zh-CN/Introduction.md。
+
 - `dcti-core` 模块增加示例代码。
   - com.dwarfeng.dcti.node.example.DecodeExample。
   - com.dwarfeng.dcti.node.example.EncodeExample。
