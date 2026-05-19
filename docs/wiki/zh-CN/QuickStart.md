@@ -14,11 +14,33 @@
 在项目的 `pom.xml` 中添加如下依赖：
 
 ```xml
-<dependency>
-    <groupId>com.dwarfeng</groupId>
-    <artifactId>dcti</artifactId>
-    <version>${dcti.version}</version>
-</dependency>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--suppress MavenModelInspection, MavenModelVersionMissed -->
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+
+    <!-- 省略其他配置 -->
+    <dependencies>
+        <!-- 省略其他配置 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dcti-core</artifactId>
+            <version>${dcti.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dcti-api</artifactId>
+            <version>${dcti.version}</version>
+        </dependency>
+        <!-- 省略其他配置 -->
+    </dependencies>
+    <!-- 省略其他配置 -->
+</project>
 ```
 
 ## 最小示例
