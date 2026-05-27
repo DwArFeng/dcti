@@ -11,7 +11,7 @@
     <parent>
         <artifactId>dcti</artifactId>
         <groupId>com.dwarfeng</groupId>
-        <version>3.0.1.a-SNAPSHOT</version>
+        <version>3.0.1.a</version>
     </parent>
 
     <artifactId>dcti-core</artifactId>
